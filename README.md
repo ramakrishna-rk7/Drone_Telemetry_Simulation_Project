@@ -1,11 +1,3 @@
-Perfect 👍 I’ll structure the README clearly into **two separate versions**:
-
-* Version 1 – Python Program (Console Simulation)
-* Version 2 – Web Interface (Dashboard UI)
-
-You can copy this directly into `README.md`.
-
----
 
 # 🚁 Drone Telemetry Simulation Project
 
