@@ -1,184 +1,155 @@
+# 🚁 Real-Time Drone Telemetry Monitoring System
 
-# 🚁 Drone Telemetry Simulation Project
+A real-time UAV (drone) telemetry monitoring dashboard built using **Python, Flask, and WebSockets**.
+The system simulates a flying drone and streams live flight data to a browser-based Ground Control Station (GCS) interface.
 
-This project consists of **two independent versions** of a Drone Telemetry System:
-
-* 🐍 **Version 1: Python Console Program**
-* 🌐 **Version 2: Web Interface Dashboard**
-
-Both versions simulate drone flight data such as altitude, speed, battery level, and GPS coordinates for 30 seconds.
+This project demonstrates how real drones, IoT devices, and autonomous vehicles continuously transmit sensor data to a monitoring application.
 
 ---
 
-# 🐍 Version 1: Python Program (Console-Based Simulation)
+## 📌 Project Overview
 
-## 📌 Description
+This application simulates a drone in flight and sends telemetry data every second to a live web dashboard.
 
-This version is a Python-based telemetry simulation that runs in the terminal.
-It generates real-time drone flight data and displays it in a structured format every second.
+The dashboard behaves like a **drone ground control station**, showing live flight information such as:
 
----
+* Altitude
+* Speed
+* Battery level
+* GPS position
+* Heading direction
+* Signal strength
+* Satellite count
+* Flight path visualization
 
-## ⚙️ How It Works
-
-1. The program initializes starting values:
-
-   * Altitude = 100 meters
-   * Speed = 10 m/s
-   * Battery = 100%
-   * Latitude = 17.3850
-   * Longitude = 78.4867
-
-2. A loop runs for **30 seconds**.
-
-3. Every second:
-
-   * Altitude changes randomly
-   * Speed changes randomly
-   * Battery decreases gradually
-   * GPS coordinates shift slightly
-   * Data is printed to the console
-   * The program waits 1 second (`time.sleep(1)`)
-
-4. After 30 seconds, the simulation stops.
+The UI updates instantly without refreshing the page using WebSocket communication.
 
 ---
 
-## 🛠 Technologies Used
+## 🧠 How It Works
 
-* Python 3
-* Built-in Libraries:
+1. Python generates simulated drone flight data
+2. Flask server hosts a web dashboard
+3. Flask-SocketIO streams real-time telemetry
+4. JavaScript receives live data in the browser
+5. Dashboard updates instantly with charts and flight path tracking
 
-  * `random`
-  * `time`
+Architecture:
 
-No external libraries required.
-
----
-
-## ▶️ How to Run
-
-Save the file as:
-
-```
-drone_simulation.py
-```
-
-Run using:
-
-```bash
-python drone_simulation.py
-```
+Drone Simulation (Python) → Flask Server → WebSocket → Browser Dashboard
 
 ---
 
-## 📊 Sample Output
+## 🖥️ Dashboard Features
 
-```
-Time: 10 sec
-Altitude: 112.00 meters
-Speed: 13.00 m/s
-Battery: 90.25%
-GPS: 17.38542 N, 78.48691 E
-```
-
----
-
-## ✨ Features
-
-* Real-time simulation (1-second updates)
-* Randomized drone behavior
-* Battery drain modeling
-* GPS movement simulation
-* Safe battery limit handling
+* Live telemetry monitoring
+* Real-time altitude graph
+* Dynamic battery indicator
+* GPS coordinate tracking
+* Heading and vertical speed display
+* Signal strength & satellite status
+* Flight path radar visualization
+* Auto-updating UI (no page refresh)
 
 ---
 
-# 🌐 Version 2: Web Interface (Drone Telemetry Dashboard)
+## 🛠️ Tech Stack
 
-## 📌 Description
+**Backend**
 
-This version is a **modern web-based dashboard** that visually displays drone telemetry data using charts and animated UI components.
+* Python
+* Flask
+* Flask-SocketIO
+* Eventlet
 
-It simulates telemetry data updates every second for 30 seconds.
-
----
-
-## 🎨 Features
-
-* 📊 Dual-axis real-time chart (Chart.js)
-
-  * Blue solid line → Altitude
-  * Red dashed line → Speed
-* 🔋 Animated battery indicator
-* 📍 Live GPS coordinate display
-* 🎨 Professional dark-themed UI
-* 📱 Responsive layout
-* ⏱ Automatic stop after 30 seconds
-
----
-
-## 🛠 Technologies Used
+**Frontend**
 
 * HTML5
-* CSS3 (Modern UI styling)
-* JavaScript (Simulation logic)
-* Chart.js (Data visualization)
+* CSS3 (Grid Layout UI)
+* JavaScript
+* Chart.js
 
-No backend required.
+**Concepts Used**
 
----
-
-## ▶️ How to Run
-
-1. Save the file as:
-
-```
-index.html
-```
-
-2. Open it in any modern browser:
-
-```
-Double-click index.html
-```
-
-The simulation will start automatically.
+* Real-time data streaming
+* WebSocket communication
+* Telemetry simulation
+* Client-server architecture
+* Live data visualization
 
 ---
 
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```
-drone-telemetry-project/
+Drone_Telemetry_Simulation_Project
 │
-├── drone_simulation.py    # Version 1 – Python console simulation
-├── index.html             # Version 2 – Web dashboard interface
+├── server.py
+├── templates/
+│   └── index.html
+├── static/
+│   ├── style.css
+│   └── script.js
 └── README.md
 ```
 
 ---
 
-# 🎯 Learning Outcomes
+## ▶️ How to Run Locally
 
-This project demonstrates:
+### 1. Clone the repository
 
-* Real-time data simulation
-* Telemetry system modeling
-* Random data generation
-* Console-based monitoring
-* Web-based data visualization
-* Frontend dashboard design
-* Chart integration using Chart.js
+```
+git clone https://github.com/ramakrishna-rk7/Drone_Telemetry_Simulation_Project.git
+cd Drone_Telemetry_Simulation_Project
+```
+
+### 2. Install dependencies
+
+```
+pip install flask flask-socketio eventlet
+```
+
+### 3. Run the server
+
+```
+python server.py
+```
+
+### 4. Open in browser
+
+```
+http://127.0.0.1:5000
+```
 
 ---
 
-# 🚀 Future Improvements
+## 📊 What This Project Demonstrates
 
-* Connect Python backend to Web UI using WebSocket
-* Store telemetry data in CSV or database
-* Add emergency alerts
-* Integrate live GPS map
-* Deploy dashboard online
-* Connect to real drone hardware
+This project shows practical understanding of:
+
+* Real-time systems
+* WebSocket communication
+* Backend–frontend integration
+* Data visualization
+* Simulation of IoT telemetry devices
+
+The same architecture is used in:
+
+* drones/UAV monitoring
+* vehicle tracking systems
+* industrial IoT sensors
+* smart devices monitoring dashboards
+
+---
+
+## 🚀 Future Improvements
+
+* Live map tracking (Leaflet / Google Maps)
+* Data logging to CSV/Database
+* Multiple drone monitoring
+* Cloud deployment (AWS / Render)
+* Mobile responsive UI
+
+---
 
