@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Telemetry</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo-icon"><i class="fa-solid fa-wifi"></i></div>
+            <div class="title-group">
+                <h1>Drone Telemetry</h1>
+                <span class="subtitle">UAV-7X • Live Monitor</span>
+            </div>
+        </div>
+        <div class="system-status">
+            <div class="status-indicator">
+                <span class="dot pulse"></span> Connected
+            </div>
+            <div class="timer-badge">T+ <span id="missionTime">00:00</span></div>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        
+        <!-- Altitude Card -->
+        <div class="card altitude-card">
+            <div class="card-header">
+                <i class="fa-solid fa-mountain text-cyan"></i> <span>Altitude</span>
+            </div>
+            <div class="card-body">
+                <div class="main-metric">
+                    <span id="altitudeValue">--</span><small>m</small>
+                </div>
+                <div class="chart-container">
+                    <canvas id="altitudeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speed Card -->
+        <div class="card speed-card">
+            <div class="card-header">
+                <i class="fa-solid fa-gauge-high text-cyan"></i> <span>Speed</span>
+            </div>
+            <div class="card-body centered">
+                <div class="gauge-wrapper">
+                    <canvas id="speedGauge"></canvas>
+                    <div class="gauge-value">
+                        <span id="speedValue">--</span>
+                        <small>km/h</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Battery Card -->
+        <div class="card battery-card">
+            <div class="card-header">
+                <i class="fa-solid fa-battery-three-quarters text-green"></i> <span>Battery</span>
+            </div>
+            <div class="card-body">
+                <div class="main-metric">
+                    <span id="batteryValue" class="text-green">--</span><small>%</small>
+                </div>
+                <div class="battery-progress-container">
+                    <div class="battery-progress-bar" id="batteryBar"></div>
+                </div>
+                <div class="battery-labels">
+                    <span>0%</span>
+                    <span>Healthy</span>
+                    <span>100%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- GPS Card -->
+        <div class="card gps-card">
+            <div class="card-header">
+                <i class="fa-solid fa-location-dot text-green"></i> <span>GPS Coordinates</span>
+            </div>
+            <div class="card-body">
+                <div class="coord-group">
+                    <label>Latitude</label>
+                    <div class="coord-value" id="latValue">--</div>
+                </div>
+                <div class="coord-group">
+                    <label>Longitude</label>
+                    <div class="coord-value" id="lonValue">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flight Path Card -->
+        <div class="card map-card">
+            <div class="card-header">
+                <i class="fa-solid fa-route text-cyan"></i> <span>Flight Path</span>
+            </div>
+            <div class="card-body map-container-wrapper">
+                <div id="flightMap"></div>
+            </div>
+        </div>
+
+        <!-- Flight Info Card -->
+        <div class="card info-card">
+            <div class="card-header">
+                <span>Flight Info</span>
+            </div>
+            <div class="card-body info-list">
+                <div class="info-item">
+                    <span class="label"><i class="fa-solid fa-arrows-up-down"></i> V/S</span>
+                    <span class="value"><span id="vsValue">--</span> <small>m/s</small></span>
+                </div>
+                <div class="info-item">
+                    <span class="label"><i class="fa-regular fa-compass"></i> Heading</span>
+                    <span class="value"><span id="headingValue">--</span>°</span>
+                </div>
+                <div class="info-item">
+                    <span class="label"><i class="fa-solid fa-signal"></i> Signal</span>
+                    <span class="value"><span id="signalValue">--</span>%</span>
+                </div>
+                <div class="info-item">
+                    <span class="label"><i class="fa-solid fa-satellite"></i> Satellites</span>
+                    <span class="value" id="satValue">--</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        Telemetry data is simulated for demonstration purposes
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
